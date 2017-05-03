@@ -1,41 +1,40 @@
-import requests
 import ast
+import aiohttp
 
 """
 document: https://coincheck.com/documents/exchange/api
 """
 
 base_url = "https://coincheck.com"
-api_urls = { 'ticker'     : '/api/ticker',
-             'trades'     : '/api/trades',
-             'order_books': '/api/order_books'
-             }
+api_urls = {"ticker": "/api/ticker",
+            "trades": "/api/trades",
+            "order_books": "/api/order_books"
+            }
+
 
 class Market(object):
     def __init__(self):
         pass
 
+    async def public_api(self, url):
+        """ template function of public api"""
+        async with aiohttp.ClientSession() as session:
+            async with session.get(base_url + api_urls.get(url)) as res:
+                text = await res.text()
+                return ast.literal_eval(text)
 
-    def public_api(self,url):
-        ''' template function of public api'''
-        try :
-            url in api_urls
-            return ast.literal_eval(requests.get(base_url + api_urls.get(url)).text)
-        except Exception as e:
-            print(e)
-    
-    def ticker(self):
-        '''get latest information of coincheck market'''
-        return self.public_api('ticker') 
-    
-    def trades(self):
-        '''get latest deal history of coincheck market'''
-        return self.public_api('trades') 
-    
-    def orderbooks(self):
-        '''get latest asks/bids information of coincheck market'''
-        return self.public_api('order_books') 
+    async def ticker(self):
+        """get latest information of coincheck market"""
+        return await self.public_api("ticker")
+
+    async def trades(self):
+        """get latest deal history of coincheck market"""
+        return await self.public_api("trades")
+
+    async def orderbooks(self):
+        """get latest asks/bids information of coincheck market"""
+        return await self.public_api("order_books")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass
