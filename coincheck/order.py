@@ -30,13 +30,14 @@ class Order(object):
                    "pair": pair
                    }
         url = "https://coincheck.com/api/exchange/orders"
-        body = "rate={rate}&amount={amount}&order_type={order_type}&pair={pair}".format(**payload)
+        body = json.dumps(payload)
         message = nonce + url + body
         signature = hmac.new(self.secret_key.encode("utf-8"), message.encode("utf-8"), hashlib.sha256).hexdigest()
         headers = {
             "ACCESS-KEY": self.access_key,
             "ACCESS-NONCE": nonce,
-            "ACCESS-SIGNATURE": signature
+            "ACCESS-SIGNATURE": signature,
+            "Content-Type": "application/json"
         }
         async with aiohttp.ClientSession() as session:
             async with session.post(url, headers=headers, data=body) as res:
