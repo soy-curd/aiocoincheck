@@ -49,11 +49,12 @@ class Order(object):
     async def sell_btc_jpy(self, **kwargs):
         return await self.create(order_type="sell", pair="btc_jpy", **kwargs)
 
-    async def buy_etc_btc(self, **kwargs):
-        return await self.create(order_type="buy", pair="etc_btc", **kwargs)
-
-    async def sell_etc_btc(self, **kwargs):
-        return await self.create(order_type="sell", pair="etc_btc", **kwargs)
+    # # 実装されていないようだ
+    # async def buy_etc_btc(self, **kwargs):
+    #     return await self.create(order_type="buy", pair="etc_btc", **kwargs)
+    #
+    # async def sell_etc_btc(self, **kwargs):
+    #     return await self.create(order_type="sell", pair="etc_btc", **kwargs)
 
     async def list(self):
         """ list all open orders func
