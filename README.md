@@ -33,5 +33,5 @@ git clone git@github.com:soy-curd/aiocoincheck.git
 ### pip 
 
 ```
-pip install git+https://github.com/soy-curd/coincheck
+pip install git+https://github.com/soy-curd/aiocoincheck
 ```
